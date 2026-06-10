@@ -1,15 +1,56 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import React from 'react';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { ExpensesProvider, useExpenses } from '@/hooks/useExpenses';
+import { Colors } from '../constants/theme';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+function RootNavigation() {
+  const { themeMode } = useExpenses();
+  const colors = Colors[themeMode];
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <>
+      <StatusBar style={themeMode === 'dark' ? 'light' : 'dark'} />
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: colors.card,
+          },
+          headerTintColor: colors.text,
+          headerShadowVisible: false,
+          contentStyle: {
+            backgroundColor: colors.background,
+          },
+        }}
+      >
+        {/* Main tabs */}
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        
+        {/* Add/Edit modal */}
+        <Stack.Screen 
+          name="add-expense-modal" 
+          options={{ 
+            presentation: 'modal',
+            title: 'Expense Form',
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: colors.card,
+            },
+            headerTintColor: colors.text,
+          }} 
+        />
+      </Stack>
+    </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <SafeAreaProvider>
+      <ExpensesProvider>
+        <RootNavigation />
+      </ExpensesProvider>
+    </SafeAreaProvider>
   );
 }

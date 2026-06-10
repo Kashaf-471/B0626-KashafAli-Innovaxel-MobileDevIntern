@@ -1,56 +1,171 @@
-# Welcome to your Expo app 👋
+# Innovaxel Expense Tracker
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Innovaxel is a React Native app built with Expo Router for tracking personal expenses. It includes a dashboard, transaction list, settings screen, and a modal form for adding or editing expenses.
 
-## Get started
+## Overview
 
-1. Install dependencies
+The app is organized around a simple flow:
 
-   ```bash
-   npm install
-   ```
+1. View your total spending and recent activity on the home screen.
+2. Add, edit, or delete expense entries from the modal form and transaction list.
+3. Review sync status, theme settings, and app stats in the settings screen.
 
-2. Start the app
+The project uses file-based routing, so each screen is defined in `src/app`.
 
-   ```bash
-   npx expo start
-   ```
+## Screens
 
-In the output, you'll find options to open the app in a
+### Home / Dashboard
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+File: `src/app/(tabs)/index.tsx`
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+This is the main landing screen. It shows:
 
-## Get a fresh project
+- A welcome header
+- Total outflow summary
+- Analytics chart
+- Recent transactions preview
+- Floating action button for creating a new expense
 
-When you're ready, run:
+The recent transactions cards are designed to give a quick scan of the latest spending without opening the full list.
+
+### Expenses List
+
+File: `src/app/(tabs)/list.tsx`
+
+This screen shows the full transaction history. It is the place to browse, filter, edit, and delete expenses after they are created.
+
+### Settings
+
+File: `src/app/(tabs)/settings.tsx`
+
+This screen shows app-level controls and account information:
+
+- Theme toggle
+- Sync status
+- Firebase reference ID
+- Total expense count and outflow summary
+- Reset database action
+
+### Add / Edit Expense Modal
+
+File: `src/app/add-expense-modal.tsx`
+
+This modal is used for both creating and editing an expense. It includes:
+
+- Title / description
+- Amount
+- Category picker
+- Date field
+- Optional notes
+
+If opened with an `id` parameter, it loads the existing expense and switches into edit mode.
+
+### Explore
+
+File: `src/app/explore.tsx`
+
+This is an additional Expo Router screen that ships with the template. It is not part of the main expense-tracking flow, but it remains available in the app.
+
+## Shared Components
+
+The UI is built from reusable components in `src/components`:
+
+- `ExpenseCard.tsx` renders each transaction row/card
+- `AnalyticsChart.tsx` shows spending analytics on the dashboard
+- `CategoryPicker.tsx` helps choose an expense category
+- `CustomInput.tsx` and `CustomButton.tsx` standardize form controls
+- `themed-text.tsx` and `themed-view.tsx` keep styling consistent
+
+## Data Flow
+
+Expense state lives in `src/hooks/useExpenses.tsx`.
+
+That hook handles:
+
+- Loading saved expenses
+- Saving changes
+- Theme persistence
+- Firebase sync when available
+- Derived totals and filters
+
+The app falls back to local storage if Firebase is unavailable.
+
+## Project Structure
+
+```text
+src/
+   app/
+      _layout.tsx
+      add-expense-modal.tsx
+      explore.tsx
+      (tabs)/
+         _layout.tsx
+         index.tsx
+         list.tsx
+         settings.tsx
+   components/
+      AnalyticsChart.tsx
+      ExpenseCard.tsx
+      CategoryPicker.tsx
+      CustomButton.tsx
+      CustomInput.tsx
+      themed-text.tsx
+      themed-view.tsx
+   hooks/
+      useExpenses.tsx
+   constants/
+      theme.ts
+   utils/
+      firebase.ts
+      storage.ts
+```
+
+## Tech Stack
+
+- Expo SDK 54
+- Expo Router
+- React Native
+- Firebase Realtime Database
+- AsyncStorage for local persistence
+
+## Getting Started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the app:
+
+```bash
+npx expo start
+```
+
+Useful run targets:
+
+```bash
+npm run android
+npm run ios
+npm run web
+```
+
+## Notes
+
+- Expo Go should work with this project when the installed app matches SDK 54.
+- If Metro or the install gets out of sync, a clean reinstall is usually the fastest fix.
+- The app keeps the main code in `src/`, so the repository root stays focused on config and tooling.
+
+## Reset Starter Content
+
+If you want to restore the default Expo starter layout, run:
 
 ```bash
 npm run reset-project
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Learn More
 
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [Expo documentation](https://docs.expo.dev/)
+- [Expo Router documentation](https://docs.expo.dev/router/introduction/)
+- [Expo Go](https://expo.dev/go)

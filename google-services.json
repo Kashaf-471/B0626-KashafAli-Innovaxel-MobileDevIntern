@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "285422696881",
+    "firebase_url": "https://innovaxel-29b98-default-rtdb.firebaseio.com",
+    "project_id": "innovaxel-29b98",
+    "storage_bucket": "innovaxel-29b98.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285422696881:android:6b44448152e1c545e16590",
+        "android_client_info": {
+          "package_name": "com.company.innovaxel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBkJ5feXDP9e86BbW0Ox32ZPc_7ig8XRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
